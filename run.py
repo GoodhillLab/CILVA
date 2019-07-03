@@ -1,23 +1,53 @@
 
 ''' 
 
-Fits the calcium imaging latent variable analysis (CILVA) model to population calcium imaging data. This code alternately optimises the static model parameters and MAP estimates of the latent variables.
+Fits the calcium imaging latent variable analysis (CILVA) model to population calcium imaging data. 
+This code alternately optimises for the static model parameters and MAP estimates of the latent variables.
 
-Inputs:
-	--data 				Location of experimental data. Expects an NxT matrix of fluorescence levels matching ${data}.ca2 and a Tx1 vector of stimulus onset times matching ${data}.stim.
-	--L 				Number of latent factors (i.e., dimensionality of latent state).
-	--num_iters 		Number of iterations of the alternating minimisation MAP estimator.
-	--iters_per_altern 	Number of iterations of the gradient-based optimisation within each alternation of the MAP estimator.
-	--max_threads 		Number of threads for multithreaded computing. Often must be specified for cluster computing.
-	--out				Prefix for output data folder. Output has form './${out}_L_${L}_gamma_${gamma}_num_iters_${num_iters}_iters_per_altern_${iters_per_altern}'. Typically used in conjunction with job IDs for cluster computing.
-	--gamma				Rate parameter for exponential prior on latent activity states. Acts as a sparsity penalty.
-	--tau_r 			Calcium transient rise time constant.
-	--tau_d 			Calcium transient decay time constant.
-	--test 				Location of test data. Expects a matrix of fluorescence levels and stimulus onset times similar to --data.
-	--imrate 			Imaging rate of fluorescence microscope. Required for estimating imaging noise variance.
-	--convert_stim 		Convert from a 1 dimensional representation of the stimulus to a 2 dimensional (1-of-K) representation. (Boolean)
+Arguments:
+	data:
+		Location of experimental data. Expects an NxT matrix of fluorescence levels matching ${data}.ca2 and 
+		a Tx1 vector of stimulus onset times matching ${data}.stim.
+
+	L:
+		Number of latent factors (i.e., dimensionality of latent state).
+
+	num_iters:
+		Number of iterations of the alternating minimisation MAP estimator.
+
+	iters_per_altern:
+		Number of iterations of the gradient-based optimisation within each alternation of the MAP estimator.
+
+	max_threads:
+		Number of threads for multithreaded computing. Often must be specified for cluster computing.
+
+	out:
+		Prefix for output data folder. Output has form 
+		'./${out}_L_${L}_gamma_${gamma}_num_iters_${num_iters}_iters_per_altern_${iters_per_altern}'. 
+		Typically used in conjunction with job IDs for cluster computing.
+
+	gamma:
+		Rate parameter for exponential prior on latent activity states. Acts as a sparsity penalty.
+
+	tau_r:
+		Calcium transient rise time constant.
+
+	tau_d:
+		Calcium transient decay time constant.
+
+	test:
+		Location of test data. Expects a matrix of fluorescence levels and stimulus onset times similar to --data.
+
+	imrate:
+		Imaging rate of fluorescence microscope. Required for estimating imaging noise variance.
+
+	convert_stim:
+		Convert from a 1 dimensional representation of the stimulus to a 2 dimensional (1-of-K) representation. (Boolean)
+
 
 Author: Marcus A. Triplett. (2019). University of Queensland, Australia.
+
+See the GitHub page https://github.com/GoodhillLab/CILVA for more information.
 
 Tested on:
 	Python v3.6.4

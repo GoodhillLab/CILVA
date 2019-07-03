@@ -15,13 +15,23 @@ def select_model(folder, data, data_type, return_fit = 'both', convert_stim = Fa
 	
 		Selects the model-fit with the highest posterior probability among a folder of fits.
 
-		Inputs: 
-			folder: 		Directory containing a set of model fits.
-			data: 			Path to the associated data.
-			data_type: 		Set to 'train' if input data is training data, 'test' for test data.
-			return_type: 	'train' to return the fits for training data, 'test' to return the fits for test data,
-							or 'both' to return both fits.
-			convert_stim: 	Set to True if stimulus must be converted from a 1d to 2d representation.
+		Arguments: 
+			folder:
+				Directory containing a set of model fits.
+
+			data:
+				Path to the associated data.
+
+			data_type:
+				Set to 'train' if input data is training data, 'test' for test data.
+
+			return_type:
+				Set to 'train' to return the fits for training data, 'test' to return the fits for test data,
+				or 'both' to return both fits.
+
+			convert_stim:
+				Set to True if stimulus must be converted from a 1d to 2d representation.
+
 
 	'''
 

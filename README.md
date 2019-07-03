@@ -26,7 +26,7 @@ Fit the model by calling `run.py` with the required arguments: `python run.py --
 More several additional arguments are provided in the `run.py` file.
 ### Example
 The Jupyter notebook `example.ipynb` provides an example of how to fit the model to data and decouple the fluorescence traces (recommended). It can be viewed here:
-> https://nbviewer.jupyter.org/github/marcustriplett/CILVA/blob/master/example.ipynb
+> https://nbviewer.jupyter.org/github/GoodhillLab/CILVA/blob/master/example.ipynb
 ### Cross validation
 The code also supports a form of single-fold cross validation: the model parameters and latent variables are learned from the training data specified with the `--data` argument, we then reinfer the latent variables on held-out test data using the already-estimated model parameters. Test data is supplied with the `--test` argument.
 ### Output

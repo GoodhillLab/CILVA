@@ -1,7 +1,7 @@
 # Calcium imaging latent variable analysis (CILVA)
 ![](https://img.shields.io/github/license/GoodhillLab/CILVA.svg)
 
-Python code for fitting the calcium imaging latent variable analysis model. See the associated preprint for more information.
+Python code for fitting the calcium imaging latent variable analysis model. See the companion preprint at https://www.biorxiv.org/content/10.1101/691261v1 for more information.
 
 Software version: 1.0.
 

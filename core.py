@@ -343,8 +343,8 @@ def fit_kernel_time_constants(f, s, N, T, K, eta, num_iters, return_errs=False):
 				Total trial duration.
 
 			eta:
-				Penalty on the time constants, preventing them from becoming too small 
-				and overfitting the fluorescence signals.
+				Penalty on the kernel time constants, to help counteract spontaneous events
+				biasing the constants towards larger values. 
 
 			num_iters:
 				Number of times to repeat the estimation. Convergence typically occurs 

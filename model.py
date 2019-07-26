@@ -33,7 +33,7 @@ def train(data, convert_stim, L, num_iters, iters_per_altern, gamma, tau_r, tau_
 	kernel 		= core.calcium_kernel(tau_r, tau_d, T)
 	init_alpha 	= np.random.normal(1, 1e-2, N)
 	init_beta 	= np.zeros((N, ))
-	init_w 		= core.init_filters(f, s, kernel, N, T, K)
+	init_w 		= core.fit_regressors(f, s, kernel, N, T, K)
 	init_b 		= np.random.rand(N, L)
 	init_x 		= 1e-1 * np.random.rand(L, T)
 

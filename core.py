@@ -226,7 +226,7 @@ def load_data(data, convert=False):
 	return [f, s]
 
 
-def init_filters(f, s, kernel, N, T, K):
+def fit_regressors(f, s, kernel, N, T, K):
 	'''
 
 		Initialise stimulus filters w via non-negative least squares regression of
@@ -313,3 +313,103 @@ def identify_params(alpha, beta, w, b, x, sigma, param_identification_args):
 	b /= lambda_norms[:, None]
 
 	return alpha, beta, w, b, x, sigma
+
+
+def fit_kernel_time_constants(f, s, N, T, K, eta, num_iters, return_errs=False):
+	'''
+
+		Code for learning rise and decay calcium time constants.
+
+		This is a heuristic method for use if the time constants are not known
+		to any degree of accuracy. To ensure that the estimated time constants 
+		are sensible for your data, I suggest using them to generate a calcium
+		kernel, convolving this with the stimulus times, and checking that they
+		line up with the observed calcium transients. It may require some adjustment
+		of the penalty term (potentially by multiple orders of magnitude) before 
+		suitable time constants are found.
+
+		To use, call the function with the following inputs
+
+			f:
+				Matrix of fluorescence levels (of size NxT).
+
+			s:
+				Matrix of stimulus times (of size KxT).
+
+			N:
+				Number of neurons.
+
+			T:
+				Total trial duration.
+
+			eta:
+				Penalty on the time constants, preventing them from becoming too small 
+				and overfitting the fluorescence signals.
+
+			num_iters:
+				Number of times to repeat the estimation. Convergence typically occurs 
+				within 3-5 iterations.
+
+			return_errs: bool
+				Optional argument. If true, returns a vector of errors to monitor convergence.
+		
+	'''
+	
+	bounds = [(1e-1, None)] * 2
+	tau_r = 0.5 # initial guess
+	delta_tau = 1 
+	errs = np.zeros(num_iters)
+
+	for it in range(num_iters):
+		kernel = calcium_kernel(tau_r, delta_tau + tau_r, T)
+		beta = fit_regressors(f, s, kernel, N, T, K)
+		params = [tau_r, delta_tau]
+		args = [f, s, N, T, K, beta, eta]
+		tau_r, delta_tau = sp.optimize.minimize(reconstruction_error_tau,
+			params,
+			args=args,
+			method='L-BFGS-B',
+			jac=grad_tau,
+			bounds=bounds,
+			options={'disp': True}).x
+		errs[it] = reconstruction_error(f, s, N, T, K, tau_r, delta_tau, beta, eta)
+
+	params = [tau_r, tau_r + delta_tau]
+	if return_errs:
+		params += [errs]
+
+	return params
+
+def grad_tau(params, args):
+	tau_r, delta_tau = params
+	f, s, N, T, K, beta, eta = args
+	Tvec = np.arange(T)
+	tau_d = tau_r + delta_tau
+
+	kernel = calcium_kernel(tau_r, tau_d, T)
+	stim = beta @ s
+	kconv = np.array([np.convolve(kernel, stim[n, :])[:T] for n in range(N)])
+
+	dk_dtau_r = -Tvec / tau_d**2 * np.exp(-Tvec/tau_d) + Tvec / tau_r**2 * np.exp(-Tvec/tau_r)
+	dk_ddelta_tau = -Tvec / tau_d**2 * np.exp(-Tvec/tau_d)
+
+	dk_dtau_r_conv = np.array([np.convolve(dk_dtau_r, stim[n, :])[:T] for n in range(N)])
+	dk_ddelta_tau_conv = np.array([np.convolve(dk_ddelta_tau, stim[n, :])[:T] for n in range(N)])
+
+	grad_tau_r = np.sum((f - kconv) * dk_dtau_r_conv) + eta
+	grad_delta_tau = np.sum((f - kconv) * dk_ddelta_tau_conv) + eta
+
+	return np.array([grad_tau_r, grad_delta_tau])
+
+def reconstruction_error(f, s, N, T, K, tau_r, delta_tau, beta, eta):
+	kernel = calcium_kernel(tau_r, tau_r + delta_tau, T)
+	conv_with_stim = np.array([np.convolve(kernel, s[k, :])[:T] for k in range(K)])
+	err = 1/2 * np.sum((f - beta @ conv_with_stim) ** 2) + eta * (tau_r + delta_tau)
+	return err
+
+def reconstruction_error_tau(params, args):
+	tau_r, delta_tau = params
+	f, s, N, T, K, beta, eta = args
+	return reconstruction_error(f, s, N, T, K, tau_r, delta_tau, beta, eta)
+
+

@@ -3,10 +3,6 @@
 
 Python code for fitting the calcium imaging latent variable analysis model. See the companion preprint at https://www.biorxiv.org/content/10.1101/691261v1 for more information.
 
-Software version: 1.0.
-
-Feedback or questions about the code can be directed to [marcus.triplett@columbia.edu](marcus.triplett@columbia.edu).
-
 ## Overview
 
 This code fits a latent variable model to a matrix of fluorescence traces. The fitted model provides
@@ -40,5 +36,5 @@ where each $arg corresponds to an argument from the `Basic model fitting` sectio
 ## Requirements
 This code requires Python 3.5+ and the NumPy (tested on v1.16.2) and SciPy (tested on v1.1.0) packages.
 
-## Author
-[Marcus A. Triplett](https://sites.google.com/view/marcustriplett/)
+## Contact
+Feedback or questions about the code can be directed to [marcus.triplett@columbia.edu](marcus.triplett@columbia.edu).

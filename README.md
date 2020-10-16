@@ -5,7 +5,7 @@ Python code for fitting the calcium imaging latent variable analysis model. See 
 
 Software version: 1.0.
 
-Feedback or questions about the code can be directed to [marcus.triplett@uq.edu.au](marcus.triplett@uq.edu.au).
+Feedback or questions about the code can be directed to [marcus.triplett@columbia.edu](marcus.triplett@columbia.edu).
 
 ## Overview
 

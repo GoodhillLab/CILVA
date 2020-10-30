@@ -12,7 +12,7 @@ This code fits a latent variable model to a matrix of fluorescence traces. The f
 
 ## Usage
 ### Basic model fitting
-Fit the model by calling `run.py` with the required arguments: `python run.py --data $data --L $L --num_iters $num_iters --iters_per_altern $iters_per_altern --max_threads $max_threads --out $out --tau_r $tau_r --tau_d $tau_d --imrate $imrate` where
+Fit the model by calling `run.py` with the required arguments: `python cilva/run.py --data $data --L $L --num_iters $num_iters --iters_per_altern $iters_per_altern --max_threads $max_threads --out $out --tau_r $tau_r --tau_d $tau_d --imrate $imrate` where
 - `$data` is the path to the training data. The code expects an NxT matrix of fluorescence levels $data.ca2 and a KxT matrix of stimulus onset times $data.stim. These can simply be renamed text files.
 - `$L` is the number of latent factors.
 - `$num_iters` is the number of times we alternate between estimating the latent variables and the model parameters.

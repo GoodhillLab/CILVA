@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python run.py \
+python cilva/run.py \
 --data data/zf1 \
 --L 3 \
 --num_iters 40 \

@@ -11,8 +11,8 @@ Author: Marcus A. Triplett. (2019). University of Queensland, Australia.
 import numpy as np
 import scipy as sp
 import time
-import core
 import os
+import core
 
 def train(data, convert_stim, L, num_iters, iters_per_altern, gamma, tau_r, tau_d, imrate):
 	'''

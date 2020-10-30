@@ -7,7 +7,6 @@ Author: Marcus A. Triplett. (2019). University of Queensland, Australia.
 '''
 
 import os
-import core
 import numpy as np
 
 def select_model(folder, data, data_type, return_fit = 'both', convert_stim = False):
@@ -31,7 +30,6 @@ def select_model(folder, data, data_type, return_fit = 'both', convert_stim = Fa
 
 			convert_stim:
 				Set to True if stimulus must be converted from a 1d to 2d representation.
-
 
 	'''
 
